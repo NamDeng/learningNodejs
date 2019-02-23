@@ -1,11 +1,10 @@
 module.exports = app => {
     const express = require('express');
     const router = express.Router();
+    const path = require('path');
     
     router.get('/', (req, res) => {
-        console.log('in login process');
-
-        res.redirect('http://localhost:3000/public/login/login.html');
+        res.sendFile(path.join(__dirname, '../public/login', 'login.html'));
     });
     
     router.post('/process', (req, res) => {

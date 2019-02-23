@@ -1,6 +1,7 @@
 module.exports = app => {
     const express = require('express');
     const router = express.Router();
+    const path = require('path');
     const multer = require('multer');
     //multer - 파일 업로드 객체
     const storage = multer.diskStorage({
@@ -20,7 +21,7 @@ module.exports = app => {
     });
     
     router.get('/', (req, res) => {
-        res.redirect('http://127.0.0.1:3000/public/upload/fileUpload.html');
+        res.sendFile(path.join(__dirname, '../public/upload', 'fileUpload.html'));
     });
     
     router.route('/photo').post(upload.array('photo', 1), (req, res) => {
