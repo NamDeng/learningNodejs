@@ -3,6 +3,7 @@ const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
 const path = require('path');
+const cors = require('cors');
 
 app.set('port', 3000);
 app.set('loginPage', path.join(__dirname, '/public/login'));
@@ -13,6 +14,9 @@ app.use('/public', express.static(path.join(__dirname, '/public')));
 // body-parser 미들 웨어 지정 - post 방식 처리용
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
+
+// cros 설정
+app.use(cors());
 
 const loginRouter = require('./router/login.js')(app);
 app.use('/login', loginRouter);

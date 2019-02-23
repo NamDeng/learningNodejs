@@ -29,10 +29,11 @@
             const op = calForm.op.value;
             
             const url = `http://127.0.0.1:3000/calc/${op}/${num1}/${num2}`;
+            
             const xhr = new XMLHttpRequest();
             xhr.onreadystatechange = () => {
                 if(xhr.readyState === 4 && xhr.status === 200) {
-                    alert('성공');
+                    document.querySelector('#area').innerHTML = xhr.responseText;
                 }
             }
             xhr.open('GET', url);

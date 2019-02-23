@@ -3,7 +3,7 @@ module.exports = app => {
     const router = express.Router();
     
     router.get('/', (req, res) => {
-        res.redirect('http://localhost:3000/public/calc/calc.html');
+        res.redirect('http://127.0.0.1:3000/public/calc/calc.html');
     });
     
     router.get('/plus/:x/:y', (req, res) => {
