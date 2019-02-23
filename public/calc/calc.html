@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>계산기 페이지</title>
+</head>
+<body>
+    <h1>계산기 프로그램</h1>
+    <form method="GET">
+       <select name="op">
+            <option value="plus">+</option>
+            <option value="minus">-</option>
+            <option value="mul">*</option>
+            <option value="div">/</option>
+        </select>
+        <input type="text" name="num1">
+        <input type="text" name="num2">
+        <input type="submit" value="계산">
+    </form>
+    <div id='area'></div>
+    
+    <script>
+        const calForm = document.forms[0];
+        calForm.onsubmit = e => {
+            e.preventDefault();
+
+            const num1 = calForm.num1.value;
+            const num2 = calForm.num2.value;
+            const op = calForm.op.value;
+            
+            const url = `http://127.0.0.1:3000/calc/${op}/${num1}/${num2}`;
+            const xhr = new XMLHttpRequest();
+            xhr.onreadystatechange = () => {
+                if(xhr.readyState === 4 && xhr.status === 200) {
+                    alert('성공');
+                }
+            }
+            xhr.open('GET', url);
+            xhr.send();
+        }
+    </script>
+</body>
+</html>
