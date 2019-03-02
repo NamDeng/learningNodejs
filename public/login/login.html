@@ -12,4 +12,24 @@
             <input type="submit">
         </form> 
 </body>
+<script>
+const getCookie = name => {
+  let cookie = {};
+  document.cookie.split(';').forEach(function(el) {
+      console.log(el);
+      let [k,v] = el.split('=');
+      cookie[k.trim()] = v;
+  })
+  return cookie[name];
+}
+const validateLogin = name => {
+    const loginCookie = getCookie(name);
+    if(loginCookie) {
+        alert(loginCookie.result);
+        
+                     
+    }
+}
+validateLogin('login');
+</script>
 </html>

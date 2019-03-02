@@ -18,7 +18,7 @@ module.exports = app => {
             content: productList
         };
         req.app.render('product', requestData, (err, html) => {
-            res.end(end);
+            res.end(html);
         });
     });
     

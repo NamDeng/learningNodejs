@@ -6,6 +6,8 @@ const cookieParser = require('cookie-parser');
 const path = require('path');
 const cors = require('cors');
 const expressSession = require('express-session');
+const mongodb = require('mongodb');
+const MongoClient = require('mongodb').MongoClient;
 
 // port 설정
 app.set('port', 3000);
@@ -33,22 +35,33 @@ app.use(expressSession({
     saveUninitialized: true
 }));
 
-const loginRouter = require('./router/login.js')(app);
-app.use('/login', loginRouter);
-
-const calcRouter = require('./router/calc.js')(app);
-app.use('/calc', calcRouter);
-
-const cookieRouter = require('./router/cookie.js')(app);
-app.use('/cookie', cookieRouter);
-
-const productRouter = require('./router/product.js')(app);
-app.use('/product', productRouter);
-
-const uploadRouter = require('./router/upload.js')(app);
-app.use('/upload', uploadRouter);
-
+let db;
 const server = http.createServer(app);
-server.listen(app.get('port'), () => {
-    console.log(`http://localhost:${app.get('port')}`);
+MongoClient.connect("mongodb://localhost:27017/local", (err, database) => {
+    if(err) throw err;
+
+    db = database.db('local');
+
+    // Start the application after the database connection is ready
+    server.listen(app.get('port'), () => {
+        console.log(`http://localhost:${app.get('port')}`);
+    });
+    
+    const loginRouter = require('./router/login.js')(db);
+    app.use('/login', loginRouter);
+
+    const calcRouter = require('./router/calc.js')(db);
+    app.use('/calc', calcRouter);
+
+    const cookieRouter = require('./router/cookie.js')(db);
+    app.use('/cookie', cookieRouter);
+
+    const productRouter = require('./router/product.js')(db);
+    app.use('/product', productRouter);
+
+    const uploadRouter = require('./router/upload.js')(db);
+    app.use('/upload', uploadRouter);
 });
+
+
+
